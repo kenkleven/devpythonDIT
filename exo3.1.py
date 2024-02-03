@@ -1,14 +1,15 @@
+import numpy as np
 import sqlite3
 
 def nombre_manquant(tableau):
-    # Somme Total des nombres consécutifs
-    somme_total = sum(range(min(tableau), max(tableau) + 1))
+    # Somme totale des nombres consécutifs
+    somme_attendue = np.sum(np.arange(np.min(tableau), np.max(tableau) + 1))
 
     # Somme réelle des nombres dans le tableau
-    somme_reelle = sum(tableau)
+    somme_reelle = np.sum(tableau)
 
     # Trouver le nombre manquant
-    nmbr_manquant = somme_total - somme_reelle
+    nmbr_manquant = somme_attendue - somme_reelle
 
     # Stocker en SQLite
     con = sqlite3.connect('nombre1.db')
@@ -19,7 +20,6 @@ def nombre_manquant(tableau):
     con.close()
 
     return nmbr_manquant
-
 
 tableau = [1, 2, 4, 5, 6, 7, 8]
 print("Le nombre manquant est :", nombre_manquant(tableau))

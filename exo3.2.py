@@ -1,13 +1,11 @@
 import sqlite3
+import numpy as np
 
 def nombre_manquant(tableau):
     ensemble_nombres = set(tableau)
 
     # Trouver le nombre manquant
-    for nombre in range(min(tableau), max(tableau)):
-        if nombre not in ensemble_nombres:
-            nmbr_manquant = nombre
-            break
+    nmbr_manquant = next(num for num in range(np.min(tableau), np.max(tableau)) if num not in ensemble_nombres)
 
     # Stocker en SQLite
     con = sqlite3.connect('nombre2.db')
@@ -16,8 +14,7 @@ def nombre_manquant(tableau):
     curseur.execute('INSERT INTO nombres_manquant VALUES (?)', (nmbr_manquant,))
     con.commit()
     con.close()
-
     return nmbr_manquant
 
-tableau_test = [1, 2, 3, 4, 5, 7, 8]
+tableau_test = [1, 2, 3, 4, 5, 6, 8]
 print("Le nombre manquant est :", nombre_manquant(tableau_test))
